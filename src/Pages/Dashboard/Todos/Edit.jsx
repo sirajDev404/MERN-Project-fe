@@ -49,7 +49,7 @@ const Edit = () => {
 
         title = title.trim()
 
-        if (title.length < 3) { return window.toastify("Please enter title", "error") }
+        if (title.length < 3) { return window.toastify("Please enter valid title", "error") }
 
         const todo = { id, title, dueDate, description, priority, status, isCompleted }
 
@@ -62,7 +62,7 @@ const Edit = () => {
                 if (status === 200) {
                     const { todo } = data
                     console.log("todo", todo)
-                    window.toastify("A new todo has been successful created", "success")
+                    window.toastify("A new todo has been successful updated", "success")
                     navigate("/dashboard/todos")
                 }
             })

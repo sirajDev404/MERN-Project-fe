@@ -29,7 +29,7 @@ const Add = () => {
 
         title = title.trim()
 
-        if (title.length < 3) { return window.toastify("Please enter title", "error") }
+        if (title.length < 3) { return window.toastify("Please enter valid title", "error") }
 
         const todo = { title, dueDate, description, priority }
 
@@ -48,6 +48,7 @@ const Add = () => {
                 if (status === 201) {
                     console.log("todo", data.todo)
                     window.toastify("A new todo has been successful created", "success")
+                    navigate("/dashboard/todos")
                 }
             })
             .catch((error) => {

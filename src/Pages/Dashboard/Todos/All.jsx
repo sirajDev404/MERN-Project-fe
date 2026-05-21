@@ -37,13 +37,6 @@ const All = () => {
 
     }, [])
 
-    //CRUD
-    // C = Created/Add/setItem = POST
-    // R = Read/All/getItem = GET
-    // U = Update/Edit/setItem = PATCH/PUT
-    // D = Delete/Remove/removeItem =DELETE
-
-
     const handleDelete = todo => {
 
         const token = localStorage.getItem("jwt")
@@ -55,7 +48,7 @@ const All = () => {
 
                     setTodos(filteredTodos)
 
-                    window.toastify("todo Delete successfully", "success")
+                    window.toastify("Todo Delete Successful", "success")
                 }
             })
             .catch((error) => {
@@ -72,7 +65,6 @@ const All = () => {
         { title: 'Description', dataIndex: 'description' },
         { title: 'Priority', dataIndex: 'priority', render: text => <Text className='text-capitalize'>{text}</Text> },
         { title: 'Date Created', dataIndex: 'createdAt', render: text => <Text className='text-capitalize'>{dayjs(text).format("dddd-D-MMM-YY ,hh:mm:ss A")}</Text> },
-        ,
         {
             title: 'Action',
             render: (_, record) => (
@@ -90,11 +82,27 @@ const All = () => {
     return (
         <main className='py-5'>
             <div className="container">
-                <div className="d-flex align-items-center justify-content-between mb-4">
-                    <Title level={2} className="mb-0">Todos</Title>
+                {/* Fixed layout: flex-row ensures Title is left and Button is right even on smallest screens */}
+                <div className="d-flex flex-row align-items-center justify-content-between mb-4">
+                    <Title level={2} className="mb-0" style={{ fontSize: 'calc(1.3rem + 0.6vw)' }}>Todos</Title>
                     <Button type="primary" onClick={() => { navigate("/dashboard/todos/add") }}> Add Todos</Button>
                 </div>
-                <Table columns={columns} dataSource={todos} loading={isLoading} />
+
+                {/* Table Layout: Injected global style to keep all headings in one single row line and forced internal x-axis scroll */}
+                <div className="table-responsive-premium">
+                    <style>{`
+                        .table-responsive-premium .ant-table-cell {
+                            white-space: nowrap !important;
+                        }
+                    `}</style>
+                    <Table
+                        columns={columns}
+                        dataSource={todos}
+                        loading={isLoading}
+                        scroll={{ x: 'max-content' }}
+                        pagination={{ placement: ['bottomRight'] }}
+                    />
+                </div>
             </div>
         </main>
     )
